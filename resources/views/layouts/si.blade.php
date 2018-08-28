@@ -42,7 +42,7 @@
                             <div class="dropdown-menu">
                                 <a href="{{ url('si/aplicaciones') }}" class="dropdown-item link-item">Aplicaciones</a>
                                 <a href="{{ url('si/parametros') }}" class="dropdown-item link-item">Parámetros</a>
-                                <a href="#" class="dropdown-item">Misceláneos</a>
+                                <a href="{{ url('si/miscelaneos') }}" class="dropdown-item link-item">Misceláneos</a>
                                 <a href="{{ url('si/monedas') }}" class="dropdown-item link-item">Estructura Monetaria</a>
                                 <a href="{{ url('si/tipo_cambio') }}" class="dropdown-item link-item">Tipo de Cambio Diario</a>
                             </div>

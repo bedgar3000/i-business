@@ -78,7 +78,7 @@ class TipoCambioController extends Controller
             'id_tipo_cambio' => '',
             'id_moneda_origen' => '',
             'id_moneda_destino' => '',
-            'fecha_cambio' => date('Y-m-d'),
+            'fecha_cambio' => date('d-m-Y'),
             'factor_compra' => 0.00,
             'factor_venta' => 0.00,
             'factor_promedio' => 0.00,
@@ -113,16 +113,27 @@ class TipoCambioController extends Controller
      */
     public function store(Request $request)
     {
+        $data = $request->all();
+        $data['fecha_cambio'] = formatDate($request->fecha_cambio);
+        $data['factor_compra'] = setNumber($request->factor_compra);
+        $data['factor_venta'] = setNumber($request->factor_venta);
+        $data['factor_promedio'] = setNumber($request->factor_promedio);
+
         #Validation
-        $validator = Validator::make($request->all(), [
+        $validator = Validator::make($data, [
+            'fecha_cambio'      => 'required|date_format:Y-m-d|before_or_equal:'.date('Y-m-d'),
             'id_moneda_origen'  => 'required',
             'id_moneda_destino' => 'required',
-            'fecha_cambio'      => 'required',
-            'factor_compra'     => 'required',
-            'factor_venta'      => 'required',
-            'factor_promedio'   => 'required',
+            'factor_compra'     => 'required|numeric',
+            'factor_venta'      => 'required|numeric',
+            'factor_promedio'   => 'required|numeric',
         ], [
-            'required' => 'Debe llenar los campos obligatorios.',
+            'required'                => 'Debe llenar los campos obligatorios.',
+            'date_format'             => 'La Fecha de Cambio debe ser una fecha válida.',
+            'before_or_equal'             => 'La Fecha de Cambio no puede ser mayor a la fecha actual.',
+            'factor_compra.numeric'   => 'Factor Compra debe ser un valor numérico válido.',
+            'factor_venta.numeric'    => 'Factor Venta debe ser un valor numérico válido.',
+            'factor_promedio.numeric' => 'Factor Promedio debe ser un valor numérico válido.',
         ]);
 
         if ($validator->fails()) {
@@ -134,13 +145,13 @@ class TipoCambioController extends Controller
 
         #Store
         $model = new TipoCambio;
+        $model->fecha_cambio        = $data['fecha_cambio'];
         $model->id_moneda_origen    = $request->id_moneda_origen;
         $model->id_moneda_destino   = $request->id_moneda_destino;
-        $model->fecha_cambio        = $request->fecha_cambio;
-        $model->factor_compra       = $request->factor_compra;
-        $model->factor_venta        = $request->factor_venta;
-        $model->factor_promedio     = $request->factor_promedio;
-        $model->ind_estado  = ($request->ind_estado ? 1 : 0);
+        $model->factor_compra       = $data['factor_compra'];
+        $model->factor_venta        = $data['factor_venta'];
+        $model->factor_promedio     = $data['factor_promedio'];
+        $model->ind_estado  = ($request->ind_estado ? 'A' : 'I');
         $model->ult_usuario = Auth::user()->usuario;
         $model->ult_fecha   = date('Y-m-d H:i:s');
         $model->ult_equipo  = $_SERVER['REMOTE_ADDR'];
@@ -214,13 +225,21 @@ class TipoCambioController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $data = $request->all();
+        $data['factor_compra'] = setNumber($request->factor_compra);
+        $data['factor_venta'] = setNumber($request->factor_venta);
+        $data['factor_promedio'] = setNumber($request->factor_promedio);
+
         #Validation
-        $validator = Validator::make($request->all(), [
-            'factor_compra'     => 'required',
-            'factor_venta'      => 'required',
-            'factor_promedio'   => 'required',
+        $validator = Validator::make($data, [
+            'factor_compra'     => 'required|numeric',
+            'factor_venta'      => 'required|numeric',
+            'factor_promedio'   => 'required|numeric',
         ], [
-            'required' => 'Debe llenar los campos obligatorios.',
+            'required'                => 'Debe llenar los campos obligatorios.',
+            'factor_compra.numeric'   => 'Factor Compra debe ser un valor numérico válido.',
+            'factor_venta.numeric'    => 'Factor Venta debe ser un valor numérico válido.',
+            'factor_promedio.numeric' => 'Factor Promedio debe ser un valor numérico válido.',
         ]);
 
         if ($validator->fails()) {
@@ -232,10 +251,10 @@ class TipoCambioController extends Controller
 
         #Update
         $model = TipoCambio::find($id);
-        $model->factor_compra       = $request->factor_compra;
-        $model->factor_venta        = $request->factor_venta;
-        $model->factor_promedio     = $request->factor_promedio;
-        $model->ind_estado  = ($request->ind_estado ? 1 : 0);
+        $model->factor_compra       = $data['factor_compra'];
+        $model->factor_venta        = $data['factor_venta'];
+        $model->factor_promedio     = $data['factor_promedio'];
+        $model->ind_estado  = ($request->ind_estado ? 'A' : 'I');
         $model->ult_usuario = Auth::user()->usuario;
         $model->ult_fecha   = date('Y-m-d H:i:s');
         $model->ult_equipo  = $_SERVER['REMOTE_ADDR'];

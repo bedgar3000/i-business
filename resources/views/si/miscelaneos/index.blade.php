@@ -3,7 +3,7 @@
         <div class="page-title d-flex">
             <h4>
                 <i class="icon-gear mr-2"></i> 
-                <span class="font-weight-semibold">Tipo de Cambio Diario</span>
+                <span class="font-weight-semibold">Misceláneos</span>
             </h4>
         </div>
     </div>
@@ -41,12 +41,9 @@
                                     <thead>
                                         <tr>
                                             <th style="width: 25px;"></th>
-                                            <th style="width: 125px; text-align: center;">Fecha</th>
-                                            <th style="min-width: 200px;">Moneda Origen</th>
-                                            <th style="min-width: 200px;">Moneda Destino</th>
-                                            <th style="width: 125px; text-align: right;">Factor Compra</th>
-                                            <th style="width: 125px; text-align: right;">Factor Venta</th>
-                                            <th style="width: 125px; text-align: right;">Factor Promedio</th>
+                                            <th style="width: 125px; text-align: center;">Aplicación</th>
+                                            <th style="width: 200px;">Maestro</th>
+                                            <th style="min-width: 200px;">Nombre</th>
                                             <th style="width: 125px;">Estado</th>
                                         </tr>
                                     </thead>
@@ -62,56 +59,25 @@
 
 <script>
     $('.datatable-ajax').dataTable({
-        ajax: '{{ url('si/tipo_cambio/list') }}',
+        ajax: '{{ url('si/miscelaneos/list') }}',
         columns: [
             {
                 orderable: false,
                 data: function(data) {
-                    return `<input type="checkbox" name="row[]" value="${data['id_tipo_cambio']}">`;
-                }
-            },
-            { 
-                className: 'text-center',
-                data: function(data) {
-                    return formatDate(data['fecha_cambio']);
+                    return '<input type="checkbox" name="row[]" value="'+data['id_miscelaneo']+'">';
                 }
             },
             { 
                 data: function(data) {
-                    return data['moneda_origen'].desc_moneda;
+                    return data['aplicacion'].desc_nombre_modulo;
                 }
             },
+            { data: 'cod_maestro' },
+            { data: 'nom_maestro' },
             { 
                 data: function(data) {
-                    return data['moneda_destino'].desc_moneda;
-                }
-            },
-            { 
-                className: 'text-right',
-                data: function(data) {
-                    return formatMoney(data['factor_compra']);
-                }
-            },
-            { 
-                className: 'text-right',
-                data: function(data) {
-                    return formatMoney(data['factor_venta']);
-                }
-            },
-            { 
-                className: 'text-right',
-                data: function(data) {
-                    return formatMoney(data['factor_promedio']);
-                }
-            },
-            { 
-                data: function(data) {
-                    var idx  = data['ind_estado'];
-                    return `
-                        <span class="badge bg-${estatus_general[idx].color}">
-                            ${estatus_general[idx].value}
-                        </span>
-                    `;
+                    var idx  = data['ind_estado']
+                    return '<span class="badge bg-'+estatus_general[idx].color+'">'+estatus_general[idx].value+'</span>';
                 }
             }
         ],

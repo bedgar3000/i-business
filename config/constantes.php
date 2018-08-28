@@ -1,8 +1,8 @@
 <?php 
 return [ 
     'estatus_general' => [
-    	'Inactivo',
-    	'Activo'
+        'A' => 'Activo',
+    	'I' => 'Inactivo'
     ],
     'parametro_tipo' => [
     	'S' => 'Sistema',

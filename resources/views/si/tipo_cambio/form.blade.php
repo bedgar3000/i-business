@@ -29,14 +29,14 @@
 				                			<div class="col-md-4">
 												<div class="form-group">
 													<label>Fecha de Cambio:</label>
-													<input type="text" class="form-control daterange-single" name="fecha_cambio" name="fecha_cambio" value="{{ $form->fecha_cambio }}" maxlength="10" {{ $disabled['editar'] }}>
+													<input type="text" class="form-control daterange-single" name="fecha_cambio" name="fecha_cambio" value="{{ formatDate($form->fecha_cambio,'Y-m-d','d-m-Y') }}" maxlength="10" {{ $disabled['editar'] }}>
 												</div>
 				                			</div>
 
 					                		<div class="col-md-4">
 												<div class="form-group">
 													<label>Moneda Origen</label>
-													<select class="form-control select" name="id_moneda_origen" id="id_moneda_origen" {{ $disabled['ver'] }} data-fouc data-placeholder="Selecciona...">
+													<select class="form-control select" name="id_moneda_origen" id="id_moneda_origen" {{ $disabled['editar'] }} data-fouc data-placeholder="Selecciona...">
 														<option></option>
 														@foreach($monedas as $row)
 															<option value="{{ $row->id_moneda }}" {{ ($row->id_moneda == $form->id_moneda_origen) ? 'selected' : '' }}>
@@ -50,7 +50,7 @@
 					                		<div class="col-md-4">
 												<div class="form-group">
 													<label>Moneda Destino</label>
-													<select class="form-control select" name="id_moneda_destino" id="id_moneda_destino" {{ $disabled['ver'] }} data-fouc data-placeholder="Selecciona...">
+													<select class="form-control select" name="id_moneda_destino" id="id_moneda_destino" {{ $disabled['editar'] }} data-fouc data-placeholder="Selecciona...">
 														<option></option>
 														@foreach($monedas as $row)
 															<option value="{{ $row->id_moneda }}" {{ ($row->id_moneda == $form->id_moneda_destino) ? 'selected' : '' }}>

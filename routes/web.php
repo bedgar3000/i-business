@@ -46,6 +46,10 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('si/tipo_cambio/list', 'SI\TipoCambioController@list');
     Route::post('si/tipo_cambio/destroyMass', 'SI\TipoCambioController@destroyMass');
     Route::resource('si/tipo_cambio', 'SI\TipoCambioController');
+    #Misceláneos
+    Route::get('si/miscelaneos/list', 'SI\MiscelaneoController@list');
+    Route::post('si/miscelaneos/destroyMass', 'SI\MiscelaneoController@destroyMass');
+    Route::resource('si/miscelaneos', 'SI\MiscelaneoController');
     #Usuario
     Route::resource('si/usuarios', 'SI\UsuarioController');
 });

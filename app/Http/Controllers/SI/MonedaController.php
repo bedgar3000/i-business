@@ -131,7 +131,7 @@ class MonedaController extends Controller
         $model->siglas_moneda = $request->siglas_moneda;
         $model->desc_moneda   = $request->desc_moneda;
         $model->tipo_moneda   = $request->tipo_moneda;
-        $model->ind_estado    = ($request->ind_estado ? 1 : 0);
+        $model->ind_estado    = ($request->ind_estado ? 'A' : 'I');
         $model->ult_usuario   = Auth::user()->usuario;
         $model->ult_fecha     = date('Y-m-d H:i:s');
         $model->ult_equipo    = $_SERVER['REMOTE_ADDR'];
@@ -225,7 +225,7 @@ class MonedaController extends Controller
         $model = Moneda::find($id);
         $model->desc_moneda = $request->desc_moneda;
         $model->tipo_moneda = $request->tipo_moneda;
-        $model->ind_estado  = ($request->ind_estado ? 1 : 0);
+        $model->ind_estado  = ($request->ind_estado ? 'A' : 'I');
         $model->ult_usuario = Auth::user()->usuario;
         $model->ult_fecha   = date('Y-m-d H:i:s');
         $model->ult_equipo  = $_SERVER['REMOTE_ADDR'];

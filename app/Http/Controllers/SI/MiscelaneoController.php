@@ -5,11 +5,13 @@ namespace App\Http\Controllers\SI;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Validator;
 
+use App\SI\Miscelaneo;
 use App\SI\Aplicacion;
 
-class AplicacionController extends Controller
+class MiscelaneoController extends Controller
 {
     /**
      * Url base para este controlador.
@@ -19,13 +21,21 @@ class AplicacionController extends Controller
     protected $url = '';
 
     /**
+     * Aplicaciones.
+     *
+     * @var array
+     */
+    protected $aplicaciones = [];
+
+    /**
      * Create a new instance.
      *
      * @return void
      */
     public function __construct()
     {
-        $this->url = url('si/aplicaciones/');
+        $this->url = url('si/miscelaneos/');
+        $this->aplicaciones = Aplicacion::all();
     }
 
     /**
@@ -39,7 +49,7 @@ class AplicacionController extends Controller
             'url' => $this->url,
         ];
 
-        return view('si.aplicaciones.index', $data);
+        return view('si.miscelaneos.index', $data);
     }
 
     /**
@@ -49,7 +59,7 @@ class AplicacionController extends Controller
      */
     public function list()
     {
-        $data = Aplicacion::all();
+        $data = Miscelaneo::with('aplicacion')->get();
         $json = [
             'data' => $data
         ];
@@ -65,12 +75,11 @@ class AplicacionController extends Controller
     public function create()
     {
         $form = (object) [
+            'id_miscelaneo' => '',
             'id_aplicacion' => '',
-            'cod_acronimo_aplicacion' => '',
-            'desc_nombre_modulo' => '',
-            'desc_descripcion_modulo' => '',
-            'id_dependencia' => '',
-            'id_misc_det_sist_fuente' => '',
+            'cod_maestro' => '',
+            'nom_maestro' => '',
+            'desc_maestro' => '',
             'ind_estado' => 'A',
             'ult_usuario' => '',
             'ult_fecha' => '',
@@ -88,9 +97,10 @@ class AplicacionController extends Controller
                 'editar' => '',
                 'ver' => '',
             ],
+            'aplicaciones' => $this->aplicaciones,
         ];
 
-        return view('si.aplicaciones.form', $data);
+        return view('si.miscelaneos.form', $data);
     }
 
     /**
@@ -101,13 +111,16 @@ class AplicacionController extends Controller
      */
     public function store(Request $request)
     {
+        $data = $request->all();
+
         #Validation
-        $validator = Validator::make($request->all(), [
-            'cod_acronimo_aplicacion' => 'required|unique:si_maestro_aplicaciones',
-            'desc_nombre_modulo'      => 'required',
+        $validator = Validator::make($data, [
+            'id_aplicacion' => 'required',
+            'cod_maestro'   => 'required|unique:si_maestro_miscelaneos',
+            'nom_maestro'   => 'required',
         ], [
             'required' => 'Debe llenar los campos obligatorios.',
-            'unique' => 'El Código ya se encuentra registrado.',
+            'unique'   => 'Código ya se encuentra registrada.',
         ]);
 
         if ($validator->fails()) {
@@ -118,17 +131,16 @@ class AplicacionController extends Controller
         }
 
         #Store
-        $model = new Aplicacion;
-        $model->cod_acronimo_aplicacion = $request->cod_acronimo_aplicacion;
-        $model->desc_nombre_modulo      = $request->desc_nombre_modulo;
-        $model->desc_descripcion_modulo = $request->desc_descripcion_modulo;
-        $model->id_dependencia          = ($request->id_dependencia ? $request->id_dependencia : NULL);
-        $model->id_misc_det_sist_fuente = ($request->id_misc_det_sist_fuente ? $request->id_misc_det_sist_fuente : NULL);
-        $model->ind_estado              = ($request->ind_estado ? 'A' : 'I');
-        $model->ult_usuario             = Auth::user()->usuario;
-        $model->ult_fecha               = date('Y-m-d H:i:s');
-        $model->ult_equipo              = $_SERVER['REMOTE_ADDR'];
-        $model->ult_ip                  = $_SERVER['REMOTE_ADDR'];
+        $model = new Miscelaneo;
+        $model->id_aplicacion = $request->id_aplicacion;
+        $model->cod_maestro   = $request->cod_maestro;
+        $model->nom_maestro   = $request->nom_maestro;
+        $model->desc_maestro  = $request->desc_maestro;
+        $model->ind_estado  = ($request->ind_estado ? 'A' : 'I');
+        $model->ult_usuario = Auth::user()->usuario;
+        $model->ult_fecha   = date('Y-m-d H:i:s');
+        $model->ult_equipo  = $_SERVER['REMOTE_ADDR'];
+        $model->ult_ip      = $_SERVER['REMOTE_ADDR'];
         $model->save();
 
         return response()->json([
@@ -145,7 +157,7 @@ class AplicacionController extends Controller
      */
     public function show($id)
     {
-        $form = Aplicacion::find($id);
+        $form = Miscelaneo::find($id);
 
         $data = [
             'form' => $form,
@@ -157,9 +169,10 @@ class AplicacionController extends Controller
                 'editar' => 'disabled',
                 'ver' => 'disabled',
             ],
+            'aplicaciones' => $this->aplicaciones,
         ];
 
-        return view('si.aplicaciones.form', $data);
+        return view('si.miscelaneos.form', $data);
     }
 
     /**
@@ -170,7 +183,7 @@ class AplicacionController extends Controller
      */
     public function edit($id)
     {
-        $form = Aplicacion::find($id);
+        $form = Miscelaneo::find($id);
 
         $data = [
             'form' => $form,
@@ -182,9 +195,10 @@ class AplicacionController extends Controller
                 'editar' => 'disabled',
                 'ver' => '',
             ],
+            'aplicaciones' => $this->aplicaciones,
         ];
 
-        return view('si.aplicaciones.form', $data);
+        return view('si.miscelaneos.form', $data);
     }
 
     /**
@@ -196,9 +210,11 @@ class AplicacionController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $data = $request->all();
+
         #Validation
-        $validator = Validator::make($request->all(), [
-            'desc_nombre_modulo'      => 'required',
+        $validator = Validator::make($data, [
+            'nom_maestro'   => 'required',
         ], [
             'required' => 'Debe llenar los campos obligatorios.',
         ]);
@@ -211,16 +227,16 @@ class AplicacionController extends Controller
         }
 
         #Update
-        $model = Aplicacion::find($id);
-        $model->desc_nombre_modulo      = $request->desc_nombre_modulo;
-        $model->desc_descripcion_modulo = $request->desc_descripcion_modulo;
-        $model->id_dependencia          = ($request->id_dependencia ? $request->id_dependencia : NULL);
-        $model->id_misc_det_sist_fuente = ($request->id_misc_det_sist_fuente ? $request->id_misc_det_sist_fuente : NULL);
-        $model->ind_estado              = ($request->ind_estado ? 'A' : 'I');
-        $model->ult_usuario             = Auth::user()->usuario;
-        $model->ult_fecha               = date('Y-m-d H:i:s');
-        $model->ult_equipo              = $_SERVER['REMOTE_ADDR'];
-        $model->ult_ip                  = $_SERVER['REMOTE_ADDR'];
+        $model = Miscelaneo::find($id);
+        $model->id_aplicacion = $request->id_aplicacion;
+        $model->cod_maestro   = $request->cod_maestro;
+        $model->nom_maestro   = $request->nom_maestro;
+        $model->desc_maestro  = $request->desc_maestro;
+        $model->ind_estado  = ($request->ind_estado ? 'A' : 'I');
+        $model->ult_usuario = Auth::user()->usuario;
+        $model->ult_fecha   = date('Y-m-d H:i:s');
+        $model->ult_equipo  = $_SERVER['REMOTE_ADDR'];
+        $model->ult_ip      = $_SERVER['REMOTE_ADDR'];
         $model->save();
 
         return response()->json([
@@ -238,7 +254,7 @@ class AplicacionController extends Controller
     public function destroy($id)
     {
         #Delete
-        $model = Aplicacion::find($id);
+        $model = Miscelaneo::find($id);
         $model->delete();
 
         return response()->json([
@@ -256,7 +272,7 @@ class AplicacionController extends Controller
     public function destroyMass(Request $request)
     {
         #Delete
-        Aplicacion::destroy($request->data);
+        Miscelaneo::destroy($request->data);
 
         return response()->json([
             'status' => 'success',

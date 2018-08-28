@@ -175,7 +175,7 @@ class ParametroController extends Controller
         $model->tipo_valor          = $request->tipo_valor;
         $model->valor_parametro     = $request->valor_parametro;
         $model->flag_comun_compania = ($request->flag_comun_compania ? 1 : 0);
-        $model->ind_estado          = ($request->ind_estado ? 1 : 0);
+        $model->ind_estado          = ($request->ind_estado ? 'A' : 'I');
         $model->ult_usuario         = Auth::user()->usuario;
         $model->ult_fecha           = date('Y-m-d H:i:s');
         $model->ult_equipo          = $_SERVER['REMOTE_ADDR'];
@@ -281,7 +281,7 @@ class ParametroController extends Controller
         $model->tipo_valor          = $request->tipo_valor;
         $model->valor_parametro     = $request->valor_parametro;
         $model->flag_comun_compania = ($request->flag_comun_compania ? 1 : 0);
-        $model->ind_estado          = ($request->ind_estado ? 1 : 0);
+        $model->ind_estado          = ($request->ind_estado ? 'A' : 'I');
         $model->ult_usuario         = Auth::user()->usuario;
         $model->ult_fecha           = date('Y-m-d H:i:s');
         $model->ult_equipo          = $_SERVER['REMOTE_ADDR'];

@@ -34,4 +34,12 @@ class Aplicacion extends Model
     {
         return $this->hasMany('App\SI\Parametro', 'id_aplicacion', 'id_aplicacion');
     }
+
+    /**
+     * Obtener los misceláneos asociados a la aplicación.
+     */
+    public function miscelaneos()
+    {
+        return $this->hasMany('App\SI\Miscelaneo', 'id_miscelaneo', 'id_miscelaneo');
+    }
 }

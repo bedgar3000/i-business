@@ -16,13 +16,7 @@ $(document).ready(function() {
             return;
         }
 
-        // Initialize
-        $('.select').select2({
-            minimumResultsForSearch: Infinity
-        });
-
-        // Bootstrap switch
-        $('.form-check-input-switch').bootstrapSwitch();
+        init();
     };
 });
 
@@ -34,6 +28,12 @@ function init() {
     });
 
     $("a.link-item").off();
+
+    $("a.link-modal").off();
+
+    $("form.link-form").off();
+
+    $("a.delete-item").off();
 
     // Get request
     $('a.link-item').on('click', function(e) {
@@ -116,6 +116,7 @@ function init() {
     // Form submit
     $('form.link-form').on('submit', function(e) {
         e.preventDefault();
+        materialLoading(true);
 
         var url = $(this).attr('action');
         var back = $(this).data('back');
@@ -133,6 +134,7 @@ function init() {
                 text: response.data.message,
                 status: response.data.status
             });
+            materialLoading(false);
             if (response.data.status === 'success' &&  back) getLink(back);
         })
         .catch(err => console.log(err));
@@ -193,6 +195,7 @@ function init() {
 
         // On confirm
         notice.get().on('pnotify.confirm', function() {
+            materialLoading(true);
             if (type != 'multiple') {
                 url = url + '/' + sel.val();
 
@@ -206,6 +209,7 @@ function init() {
                                 table_rows.row('.table-success').remove().draw(false);
                             });
                         }
+                        materialLoading(false);
                     })
                     .catch(err => console.log(err));
             }
@@ -228,6 +232,7 @@ function init() {
                                 table_rows.row('.table-success').remove().draw(false);
                             });
                         }
+                        materialLoading(false);
                     })
                     .catch(err => console.log(err));
             }
@@ -269,15 +274,15 @@ function init() {
 
     //  Mask
     $('.alpha-dash').mask('A', {'translation': {A: {pattern: /[a-zA-Z0-9-_]/, recursive: true}}});
-    $('.daterange-single').mask('0000-00-00');
+    $('.daterange-single').mask('00-00-0000');
     $('.money').mask("#,##0.00", {reverse: true, selectOnFocus: true});
 
     // Single picker
     $('.daterange-single').daterangepicker({
         singleDatePicker: true,
-        maxDate: moment().format('YYYY-MM-DD'),
+        maxDate: moment().format('DD-MM-YYYY'),
         locale: {
-            format: 'YYYY-MM-DD'
+            format: 'DD-MM-YYYY'
         }
     });
 }
@@ -322,4 +327,9 @@ function message(params) {
 
 function formatMoney(value) {
     return numeral(value).format('0,0.00');
+}
+
+function formatDate(value) {
+    var p = value.split('-');
+    return p[2] + '-' + p[1] + '-' + p[0];
 }
