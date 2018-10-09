@@ -16,20 +16,25 @@ Route::post('login', 'Auth\LoginController@login')->name('login');
 Route::post('logout', 'Auth\LoginController@logout')->name('logout');
 
 Route::group(['middleware' => ['auth']], function () {
+
     Route::get('home','HomeController@index')->name('home');
     Route::get('rh', function () {
         return view('rh.dashboard');
     });
+
     Route::get('cb', function () {
         return view('cb.dashboard');
     });
+
     ##  Sistema
     Route::get('si', function () {
         return view('layouts.si');
     });
+
     Route::get('si/dashboard', function () {
         return view('si.dashboard');
     });
+
     #Aplicacion
     Route::get('si/aplicaciones/list', 'SI\AplicacionController@list');
     Route::post('si/aplicaciones/destroyMass', 'SI\AplicacionController@destroyMass');
@@ -50,6 +55,26 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('si/miscelaneos/list', 'SI\MiscelaneoController@list');
     Route::post('si/miscelaneos/destroyMass', 'SI\MiscelaneoController@destroyMass');
     Route::resource('si/miscelaneos', 'SI\MiscelaneoController');
+    #Paises
+    Route::get('si/paises/list', 'SI\PaisController@list');
+    Route::post('si/paises/destroyMass', 'SI\PaisController@destroyMass');
+    Route::resource('si/paises', 'SI\PaisController');
+    #Estados
+    Route::get('si/estados/list', 'SI\EstadoController@list');
+    Route::post('si/estados/destroyMass', 'SI\EstadoController@destroyMass');
+    Route::resource('si/estados', 'SI\EstadoController');
+
+    #Tipo de Departamentos/Municipios
+    Route::get('si/municipios/list', 'SI\MunicipioController@list');
+    Route::post('si/municipios/destroyMass', 'SI\MunicipioController@destroyMass');
+    Route::resource('si/municipios', 'SI\MunicipioController');
+
+    #Ciudades
+    Route::get('si/ciudades/list','SI\CiudadController@list');
+    Route::post('si/ciudades/destroyMass','SI\CiudadController@destroyMass');
+    Route::resource('si/ciudades','SI\CiudadController');
+
+
     #Usuario
     Route::resource('si/usuarios', 'SI\UsuarioController');
 });

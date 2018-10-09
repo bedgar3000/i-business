@@ -23,10 +23,14 @@ class SiMaestroEstados extends Migration
           $table->string('ult_equipo', 30)->nullable();
           $table->string('ult_ip', 30)->nullable();
 
+          $table->foreign('id_pais')->references('id_pais')->on('si_maestro_paises');
+
           $table->engine = 'InnoDB';
           $table->charset = 'utf8';
           $table->collation = 'utf8_unicode_ci';
-    }
+
+});    
+}
 
     /**
      * Reverse the migrations.

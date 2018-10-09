@@ -44,7 +44,7 @@
                                 <a href="{{ url('si/parametros') }}" class="dropdown-item link-item">Parámetros</a>
                                 <a href="{{ url('si/miscelaneos') }}" class="dropdown-item link-item">Misceláneos</a>
                                 <a href="{{ url('si/monedas') }}" class="dropdown-item link-item">Estructura Monetaria</a>
-                                <a href="{{ url('si/tipo_cambio') }}" class="dropdown-item link-item">Tipo de Cambio Diario</a>
+                                <a href="{{ url('si/tipo_cambio')}}" class="dropdown-item link-item">Tipo de Cambio Diario</a>
                             </div>
                         </div>
                         <div class="dropdown-submenu">
@@ -65,10 +65,10 @@
                                 <i class="icon-map"></i> Organización Territorial
                             </a>
                             <div class="dropdown-menu">
-                                <a href="#" class="dropdown-item">Paises</a>
-                                <a href="#" class="dropdown-item">Provincias / Estados</a>
-                                <a href="#" class="dropdown-item">Departamentos / Municipios</a>
-                                <a href="#" class="dropdown-item">Ciudades</a>
+                                <a href="{{ url('si/paises') }}" class="dropdown-item link-item">Paises</a>
+                                <a href="{{ url('si/estados') }}" class="dropdown-item link-item">Provincias / Estados</a>
+                                <a href="{{ url('si/municipios') }}"  class="dropdown-item link-item">Departamentos / Municipios</a>
+                                <a href="{{ url('si/ciudades') }}" class="dropdown-item link-item">Ciudades</a>
                             </div>
                         </div>
                     </div>
