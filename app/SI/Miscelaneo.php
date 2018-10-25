@@ -25,13 +25,32 @@ class Miscelaneo extends Model
      *
      * @var bool
      */
-    public $timestamps = false;
+    // public $timestamps = false;
+    const CREATED_AT = 'ult_fecha';
+    const UPDATED_AT = 'ult_fecha';
 
     /**
-     * Obtener la aplicacion a la qe pertenece maestro.
+     * The attributes that aren't mass assignable.
+     *
+     * @var array
+     */
+    protected $guarded = [
+        'ult_usuario', 'ult_fecha', 'ult_equipo', 'ult_ip'
+    ];
+
+    /**
+     * Obtener la aplicacion a la que pertenece el maestro.
      */
     public function aplicacion()
     {
         return $this->hasOne('App\SI\Aplicacion', 'id_aplicacion', 'id_aplicacion');
+    }
+
+    /**
+     * Obtener los valores asociados al maestro.
+     */
+    public function detalles()
+    {
+        return $this->hasMany('App\SI\MiscelaneoDetalle', 'id_miscelaneo', 'id_miscelaneo');
     }
 }

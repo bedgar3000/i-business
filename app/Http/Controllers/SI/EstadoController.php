@@ -20,14 +20,7 @@ class EstadoController extends Controller
      * @var string
      */
     protected $url = '';
-
-    /**
-     * Aplicaciones.
-     *
-     * @var array
-     */
-    protected $paises= [];
-
+    
     /**
      * Create a new instance.
      *
@@ -36,7 +29,6 @@ class EstadoController extends Controller
     public function __construct()
     {
         $this->url = url('si/estados/');
-        $this->paises = Pais::all();
     }
 
     /**
@@ -84,6 +76,7 @@ class EstadoController extends Controller
             'ult_equipo' => '',
             'ult_ip' => '',
         ];
+        $paises = Pais::all();
 
         $data = [
             'form' => $form,
@@ -95,7 +88,7 @@ class EstadoController extends Controller
                 'editar' => '',
                 'ver' => '',
             ],
-            'paises' => $this->paises,
+            'paises' => $paises,
         ];
 
         return view('si.estados.form', $data);
@@ -153,6 +146,7 @@ class EstadoController extends Controller
     public function show($id)
     {
         $form = Estado::find($id);
+        $paises = Pais::all();
 
         $data = [
             'form' => $form,
@@ -164,7 +158,7 @@ class EstadoController extends Controller
                 'editar' => 'disabled',
                 'ver' => 'disabled',
             ],
-            'paises' => $this->paises,
+            'paises' => $paises,
         ];
 
         return view('si.estados.form', $data);
@@ -179,6 +173,7 @@ class EstadoController extends Controller
     public function edit($id)
     {
         $form = Estado::find($id);
+        $paises = Pais::all();
 
         $data = [
             'form' => $form,
@@ -190,7 +185,7 @@ class EstadoController extends Controller
                 'editar' => 'disabled',
                 'ver' => '',
             ],
-            'paises' => $this->paises,
+            'paises' => $paises,
         ];
 
         return view('si.estados.form', $data);

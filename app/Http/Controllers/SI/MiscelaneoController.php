@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Validator;
 
+use App\Rules\UniqueArray;
+
 use App\SI\Miscelaneo;
 use App\SI\Aplicacion;
 
@@ -112,15 +114,17 @@ class MiscelaneoController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
-
+        
         #Validation
         $validator = Validator::make($data, [
-            'id_aplicacion' => 'required',
-            'cod_maestro'   => 'required|unique:si_maestro_miscelaneos',
-            'nom_maestro'   => 'required',
+            'id_aplicacion'             => 'required',
+            'cod_maestro'               => 'required|unique:si_maestro_miscelaneos',
+            'nom_maestro'               => 'required',
+            'detalles.*.cod_detalle'    => ['required', new UniqueArray('Valores del maestro', 'Código')],
+            'detalles.*.desc_detalle'   => 'required',
         ], [
-            'required' => 'Debe llenar los campos obligatorios.',
-            'unique'   => 'Código ya se encuentra registrada.',
+            'required'      => 'Debe llenar los campos obligatorios.',
+            'unique'        => 'Código ya se encuentra registrado.',
         ]);
 
         if ($validator->fails()) {
@@ -129,20 +133,15 @@ class MiscelaneoController extends Controller
                 'message' => $validator->errors()->all()[0],
             ]);
         }
+        
+        #Data
+        $data_miscelaneo = $data; unset($data_miscelaneo['detalles']);
+        $data_detalle = $data['detalles'];
 
         #Store
-        $model = new Miscelaneo;
-        $model->id_aplicacion = $request->id_aplicacion;
-        $model->cod_maestro   = $request->cod_maestro;
-        $model->nom_maestro   = $request->nom_maestro;
-        $model->desc_maestro  = $request->desc_maestro;
-        $model->ind_estado  = ($request->ind_estado ? 'A' : 'I');
-        $model->ult_usuario = Auth::user()->usuario;
-        $model->ult_fecha   = date('Y-m-d H:i:s');
-        $model->ult_equipo  = $_SERVER['REMOTE_ADDR'];
-        $model->ult_ip      = $_SERVER['REMOTE_ADDR'];
-        $model->save();
-
+        $miscelaneo = Miscelaneo::create($data_miscelaneo);
+        $miscelaneo->detalles()->createMany($data_detalle);
+        
         return response()->json([
             'status' => 'success',
             'message' => 'Registro almacenado exitosamente',

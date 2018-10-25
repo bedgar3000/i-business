@@ -28,18 +28,18 @@ class Moneda extends Model
     public $timestamps = false;
 
     /**
-     * Obtener los parámetros asociados a la aplicación.
+     * Obtener los tipos de cambios que tiene la moneda.
      */
     public function tipo_cambio_origen()
     {
-        return $this->hasMany('App\SI\TipoMoneda', 'id_moneda', 'id_moneda_origen');
+        return $this->hasMany('App\SI\TipoCambio', 'id_moneda', 'id_moneda_origen');
     }
 
     /**
-     * Obtener los parámetros asociados a la aplicación.
+     * Obtener los tipos de cambios que tiene la moneda.
      */
     public function tipo_cambio_destino()
     {
-        return $this->hasMany('App\SI\TipoMoneda', 'id_moneda', 'id_moneda_destino');
+        return $this->hasMany('App\SI\TipoCambio', 'id_moneda', 'id_moneda_destino');
     }
 }

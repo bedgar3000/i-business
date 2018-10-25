@@ -16,15 +16,16 @@ class CreateSiMiscelaneosDetTable extends Migration
         Schema::create('si_miscelaneos_det', function (Blueprint $table) {
             $table->increments('id_miscelaneo_det');
             $table->unsignedInteger('id_miscelaneo');
-            $table->string('cod_detalle', 15)->unique();
+            $table->string('cod_detalle', 15);
             $table->string('desc_detalle');
             $table->enum('ind_estado', ['A','I'])->default('A');
             $table->string('ult_usuario', 100)->nullable();
             $table->dateTime('ult_fecha')->nullable();
             $table->string('ult_equipo', 30)->nullable();
             $table->string('ult_ip', 30)->nullable();
-
-            $table->foreign('id_miscelaneo')->references('id_miscelaneo')->on('si_maestro_miscelaneos');
+            
+            $table->unique(['id_miscelaneo_det', 'cod_detalle']);
+            $table->foreign('id_miscelaneo')->references('id_miscelaneo')->on('si_maestro_miscelaneos')->onDelete('cascade');
 
             $table->engine = 'InnoDB';
             $table->charset = 'utf8';

@@ -41,8 +41,8 @@
                                     <thead>
                                         <tr>
                                             <th style="width: 25px;"></th>
-                                            <th style="width: 20px;">Pais</th>
                                             <th style="width: 125px;">Nombre Estado</th>
+                                            <th style="width: 20px;">Pais</th>
                                             <th style="width: 125px;">Estado</th>
                                         </tr>
                                     </thead>
@@ -68,12 +68,12 @@
             },
             {
                 data: function(data) {
-                    return data['pais']['desc_pais'];
+                    return data['desc_estado'];
                 }
             },
             {
                 data: function(data) {
-                    return data['desc_estado'];
+                    return data['pais']['desc_pais'];
                 }
             },
             {

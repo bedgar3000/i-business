@@ -58,23 +58,21 @@ Route::group(['middleware' => ['auth']], function () {
     #Paises
     Route::get('si/paises/list', 'SI\PaisController@list');
     Route::post('si/paises/destroyMass', 'SI\PaisController@destroyMass');
+    Route::post('si/paises/estados', 'SI\PaisController@estados');
     Route::resource('si/paises', 'SI\PaisController');
     #Estados
     Route::get('si/estados/list', 'SI\EstadoController@list');
     Route::post('si/estados/destroyMass', 'SI\EstadoController@destroyMass');
     Route::resource('si/estados', 'SI\EstadoController');
-
     #Tipo de Departamentos/Municipios
     Route::get('si/municipios/list', 'SI\MunicipioController@list');
     Route::post('si/municipios/destroyMass', 'SI\MunicipioController@destroyMass');
     Route::resource('si/municipios', 'SI\MunicipioController');
-
     #Ciudades
     Route::get('si/ciudades/list','SI\CiudadController@list');
     Route::post('si/ciudades/destroyMass','SI\CiudadController@destroyMass');
     Route::resource('si/ciudades','SI\CiudadController');
-
-
+    
     #Usuario
     Route::resource('si/usuarios', 'SI\UsuarioController');
 });

@@ -20,7 +20,7 @@
 
         <link href="{{ asset('vendor/material-loading/material-loading.css') }}" rel="stylesheet" type="text/css">
 
-        <link href="{{ asset('css/app.css') }}" rel="stylesheet" type="text/css">
+        <link href="{{ asset('css/app.css?'.date('YmdHis')) }}" rel="stylesheet" type="text/css">
 
         @yield('css')
     </head>
@@ -95,51 +95,52 @@
         <!-- /remote source -->
 
         <!-- Core JS files -->
-        <script src="{{ asset('limitless/js/main/jquery.min.js') }}"></script>
-        <script src="{{ asset('limitless/js/main/bootstrap.bundle.min.js') }}"></script>
-        <script src="{{ asset('limitless/js/plugins/loaders/blockui.min.js') }}"></script>
-        <script src="{{ asset('limitless/js/plugins/ui/slinky.min.js') }}"></script>
+        <script src="{{ asset('limitless/js/main/jquery.min.js?'.date('YmdHis')) }}"></script>
+        <script src="{{ asset('limitless/js/main/bootstrap.bundle.min.js?'.date('YmdHis')) }}"></script>
+        <script src="{{ asset('limitless/js/plugins/loaders/blockui.min.js?'.date('YmdHis')) }}"></script>
+        <script src="{{ asset('limitless/js/plugins/ui/slinky.min.js?'.date('YmdHis')) }}"></script>
         <!-- /core JS files -->
         <!-- Theme JS files -->
-        <script src="{{ asset('limitless/js/plugins/visualization/d3/d3.min.js') }}"></script>
-        <script src="{{ asset('limitless/js/plugins/visualization/d3/d3_tooltip.js') }}"></script>
-        <script src="{{ asset('limitless/js/plugins/extensions/jquery_ui/core.min.js') }}"></script>
-        <script src="{{ asset('limitless/js/plugins/tables/datatables/datatables.min.js') }}"></script>
-        <script src="{{ asset('limitless/js/plugins/forms/inputs/inputmask.js') }}"></script>
-        <script src="{{ asset('limitless/js/plugins/forms/selects/select2.min.js') }}"></script>
-        <script src="{{ asset('limitless/js/plugins/forms/selects/bootstrap_multiselect.js') }}"></script>
-        <script src="{{ asset('limitless/js/plugins/forms/styling/uniform.min.js') }}"></script>
-        <script src="{{ asset('limitless/js/plugins/forms/inputs/typeahead/typeahead.bundle.min.js') }}"></script>
-        <script src="{{ asset('limitless/js/plugins/forms/tags/tagsinput.min.js') }}"></script>
-        <script src="{{ asset('limitless/js/plugins/forms/tags/tokenfield.min.js') }}"></script>
-        <script src="{{ asset('limitless/js/plugins/forms/inputs/touchspin.min.js') }}"></script>
-        <script src="{{ asset('limitless/js/plugins/forms/inputs/maxlength.min.js') }}"></script>
-        <script src="{{ asset('limitless/js/plugins/forms/inputs/formatter.min.js') }}"></script>
-        <script src="{{ asset('limitless/js/plugins/forms/styling/switchery.min.js') }}"></script>
-        <script src="{{ asset('limitless/js/plugins/forms/styling/switch.min.js') }}"></script>
-        <script src="{{ asset('limitless/js/plugins/forms/selects/select2.min.js') }}"></script>
-        <script src="{{ asset('limitless/js/plugins/ui/moment/moment.min.js') }}"></script>
-        <script src="{{ asset('limitless/js/plugins/pickers/daterangepicker.js') }}"></script>
-        <script src="{{ asset('limitless/js/plugins/notifications/pnotify.min.js') }}"></script>
-        <script src="{{ asset('limitless/js/plugins/ui/moment/moment.min.js') }}"></script>
-        <script src="{{ asset('limitless/js/plugins/pickers/daterangepicker.js') }}"></script>
-        <script src="{{ asset('limitless/js/plugins/pickers/anytime.min.js') }}"></script>
-        <script src="{{ asset('limitless/js/plugins/pickers/pickadate/picker.js') }}"></script>
-        <script src="{{ asset('limitless/js/plugins/pickers/pickadate/picker.date.js') }}"></script>
-        <script src="{{ asset('limitless/js/plugins/pickers/pickadate/picker.time.js') }}"></script>
-        <script src="{{ asset('limitless/js/plugins/pickers/pickadate/legacy.js') }}"></script>
-        <script src="{{ asset('limitless/js/plugins/notifications/jgrowl.min.js') }}"></script>
+        <script src="{{ asset('limitless/js/plugins/visualization/d3/d3.min.js?'.date('YmdHis')) }}"></script>
+        <script src="{{ asset('limitless/js/plugins/visualization/d3/d3_tooltip.js?'.date('YmdHis')) }}"></script>
+        <script src="{{ asset('limitless/js/plugins/extensions/jquery_ui/core.min.js?'.date('YmdHis')) }}"></script>
+        <script src="{{ asset('limitless/js/plugins/tables/datatables/datatables.min.js?'.date('YmdHis')) }}"></script>
+        <script src="{{ asset('limitless/js/plugins/forms/inputs/inputmask.js?'.date('YmdHis')) }}"></script>
+        <script src="{{ asset('limitless/js/plugins/forms/selects/select2.min.js?'.date('YmdHis')) }}"></script>
+        <script src="{{ asset('limitless/js/plugins/forms/selects/bootstrap_multiselect.js?'.date('YmdHis')) }}"></script>
+        <script src="{{ asset('limitless/js/plugins/forms/styling/uniform.min.js?'.date('YmdHis')) }}"></script>
+        <script src="{{ asset('limitless/js/plugins/forms/inputs/typeahead/typeahead.bundle.min.js?'.date('YmdHis')) }}"></script>
+        <script src="{{ asset('limitless/js/plugins/forms/tags/tagsinput.min.js?'.date('YmdHis')) }}"></script>
+        <script src="{{ asset('limitless/js/plugins/forms/tags/tokenfield.min.js?'.date('YmdHis')) }}"></script>
+        <script src="{{ asset('limitless/js/plugins/forms/inputs/touchspin.min.js?'.date('YmdHis')) }}"></script>
+        <script src="{{ asset('limitless/js/plugins/forms/inputs/maxlength.min.js?'.date('YmdHis')) }}"></script>
+        <script src="{{ asset('limitless/js/plugins/forms/inputs/formatter.min.js?'.date('YmdHis')) }}"></script>
+        <script src="{{ asset('limitless/js/plugins/forms/styling/switchery.min.js?'.date('YmdHis')) }}"></script>
+        <script src="{{ asset('limitless/js/plugins/forms/styling/switch.min.js?'.date('YmdHis')) }}"></script>
+        <script src="{{ asset('limitless/js/plugins/forms/selects/select2.min.js?'.date('YmdHis')) }}"></script>
+        <script src="{{ asset('limitless/js/plugins/ui/moment/moment.min.js?'.date('YmdHis')) }}"></script>
+        <script src="{{ asset('limitless/js/plugins/pickers/daterangepicker.js?'.date('YmdHis')) }}"></script>
+        <script src="{{ asset('limitless/js/plugins/notifications/pnotify.min.js?'.date('YmdHis')) }}"></script>
+        <script src="{{ asset('limitless/js/plugins/ui/moment/moment.min.js?'.date('YmdHis')) }}"></script>
+        <script src="{{ asset('limitless/js/plugins/pickers/daterangepicker.js?'.date('YmdHis')) }}"></script>
+        <script src="{{ asset('limitless/js/plugins/pickers/anytime.min.js?'.date('YmdHis')) }}"></script>
+        <script src="{{ asset('limitless/js/plugins/pickers/pickadate/picker.js?'.date('YmdHis')) }}"></script>
+        <script src="{{ asset('limitless/js/plugins/pickers/pickadate/picker.date.js?'.date('YmdHis')) }}"></script>
+        <script src="{{ asset('limitless/js/plugins/pickers/pickadate/picker.time.js?'.date('YmdHis')) }}"></script>
+        <script src="{{ asset('limitless/js/plugins/pickers/pickadate/legacy.js?'.date('YmdHis')) }}"></script>
+        <script src="{{ asset('limitless/js/plugins/notifications/jgrowl.min.js?'.date('YmdHis')) }}"></script>
         
-        <script src="{{ asset('limitless/js/app.js') }}"></script>
+        <script src="{{ asset('limitless/js/app.js?'.date('YmdHis')) }}"></script>
         <!-- /theme JS files -->
 
-        <script src="{{ asset('vendor/axios/axios.min.js') }}"></script>
-        <script src="{{ asset('vendor/material-loading/material-loading.js') }}"></script>
-        <script src="{{ asset('vendor/jquery-mask/jquery.mask.min.js') }}"></script>
-        <script src="{{ asset('vendor/numeral/numeral.min.js') }}"></script>
+        <script src="{{ asset('vendor/axios/axios.min.js?'.date('YmdHis')) }}"></script>
+        <script src="{{ asset('vendor/material-loading/material-loading.js?'.date('YmdHis')) }}"></script>
+        <script src="{{ asset('vendor/jquery-mask/jquery.mask.min.js?'.date('YmdHis')) }}"></script>
+        <script src="{{ asset('vendor/numeral/numeral.min.js?'.date('YmdHis')) }}"></script>
+        <script src="{{ asset('vendor/jquery.serializejson/jquery.serializejson.js?'.date('YmdHis')) }}"></script>
 
-        <script src="{{ asset('js/constantes.js') }}"></script>
-        <script src="{{ asset('js/app.js') }}"></script>
+        <script src="{{ asset('js/constantes.js?'.date('YmdHis')) }}"></script>
+        <script src="{{ asset('js/app.js?'.date('YmdHis')) }}"></script>
 
         @yield('js')
     </body>

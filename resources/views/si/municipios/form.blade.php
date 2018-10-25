@@ -4,7 +4,7 @@
 	        <div class="page-title d-flex">
 	            <h4>
 	                <i class="icon-gear mr-2"></i>
-	                <span class="font-weight-semibold"> Municipios  </span> - {{ $title }}
+	                <span class="font-weight-semibold"> Departamentos / Municipios  </span> - {{ $title }}
 	            </h4>
 	        </div>
 	    </div>
@@ -17,7 +17,7 @@
             <div class="page-container">
                 <div class="page-content">
                     <div class="content-wrapper">
-                    	<div class="col-md-{{ ($option != 'show' ? '10 offset-md-1' : '12') }}">
+                    	<div class="col-md-{{ ($option != 'show' ? '8 offset-md-2' : '12') }}">
 				            <div class="card">
 				                <div class="card-body">
 				                	<form class="link-form" autocomplete="off"
@@ -25,34 +25,50 @@
 				                		action="{{ $action }}" data-back="{{ $url }}">
 				                		<input type="hidden" name="id_municipio" id="id_municipio" value="{{ $form->id_municipio }}">
 				                		<div class="row">
-					                		<div class="col-md-4">
+					                		<div class="col-md-12">
+												<div class="form-group">
+													<label>Paises</label>
+													<select class="form-control select" name="id_pais" id="id_pais" {{ $disabled['editar'] }} 
+														data-fouc data-placeholder="Selecciona..."
+														data-url="si/paises/estados" onchange="select($(this), [$('#id_estado')]);">
+														<option></option>
+														@foreach($paises as $row)
+															<option value="{{ $row->id_pais }}" {{ ($row->id_pais == $form->estado->id_pais) ? 'selected' : '' }}>
+																{{ $row->desc_pais }}
+															</option>
+														@endforeach
+													</select>
+												</div>
+											</div>
+											
+					                		<div class="col-md-12">
 												<div class="form-group">
 													<label>Estados</label>
 													<select class="form-control select" name="id_estado" id="id_estado" {{ $disabled['editar'] }} data-fouc data-placeholder="Selecciona...">
-													<option></option>
-													@foreach($estado as $row)
-															<option value="{{ $row->id_estado }}" {{ ($row->id_estado == 	$form->id_estado) ? 'selected' : '' }}>
-															{{ $row->desc_estado }}
+														<option></option>
+														@foreach($estados as $row)
+															<option value="{{ $row->id_estado }}" {{ ($row->id_estado == $form->id_estado) ? 'selected' : '' }}>
+																{{ $row->desc_estado }}
 															</option>
-													@endforeach
+														@endforeach
 													</select>
 												</div>
 					                		</div>
 
-				                			<div class="col-md-4">
-																<div class="form-group">
-																	<label>Nombre Municipio:</label>
-																	<input type="text" class="form-control municipio" name="desc_municipio" id="desc_municipio" value="{{ $form->desc_municipio }}">
-																</div>
+				                			<div class="col-md-12">
+												<div class="form-group">
+													<label>Nombre Municipio:</label>
+													<input type="text" class="form-control municipio" name="desc_municipio" id="desc_municipio" value="{{ $form->desc_municipio }}">
+												</div>
 				                			</div>
 
 				                			<div class="col-md-12">
-																<div class="form-check form-check-switch form-check-switch-left">
-																	<label class="form-check-label d-flex align-items-center">
-																		<input type="checkbox" name="ind_estado" id="ind_estado" value="1" data-on-color="success" data-off-color="danger" data-on-text="Activo" data-off-text="Inactivo" class="form-check-input-switch" {{ (($form->ind_estado === 'A') ? 'checked' : '') }} {{ $disabled['ver'] }}>
-																	</label>
-																</div>
-								                	</div>
+												<div class="form-check form-check-switch form-check-switch-left">
+													<label class="form-check-label d-flex align-items-center">
+														<input type="checkbox" name="ind_estado" id="ind_estado" value="1" data-on-color="success" data-off-color="danger" data-on-text="Activo" data-off-text="Inactivo" class="form-check-input-switch" {{ (($form->ind_estado === 'A') ? 'checked' : '') }} {{ $disabled['ver'] }}>
+													</label>
+												</div>
+											</div>
 				                		</div>
 
 										@if ($option != 'show')

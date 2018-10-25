@@ -37,7 +37,7 @@ class Estado extends Model
         return $this->belongsTo(Pais::class, 'id_pais', 'id_pais');
     }
 
-      function municipio()
+    function municipio()
     {
         return $this->hasMany(Municipio::class,'id_estado', 'id_estado');
     }
@@ -46,6 +46,4 @@ class Estado extends Model
     {
         return $this->hasMany(Ciudad::class,'id_estado', 'id_estado');
     }
-
-
 }

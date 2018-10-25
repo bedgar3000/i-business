@@ -168,3 +168,7 @@
 input.money {
     text-align: right;
 }
+
+.table-cell td, .table-cell-s td {
+    padding: 0.40rem 0.25rem !important;
+}

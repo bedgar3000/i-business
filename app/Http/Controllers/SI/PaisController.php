@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Validator;
 
 use App\SI\Pais;
+use App\SI\Estado;
 
 class PaisController extends Controller
 {
@@ -245,5 +246,18 @@ class PaisController extends Controller
             'status' => 'success',
             'message' => 'Registro(s) eliminado(s) exitosamente',
         ]);
+    }
+
+    /**
+     * Obtener los estados relacionados a un pais.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function estados(Request $request)
+    {
+        $data = Estado::select('id_estado as id', 'desc_estado as nombre')->where(['id_pais' => $request->id, 'ind_estado' => 'A'])->get();
+        
+        return response()->json($data);
     }
 } 

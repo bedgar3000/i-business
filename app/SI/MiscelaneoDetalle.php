@@ -28,7 +28,16 @@ class MiscelaneoDetalle extends Model
     public $timestamps = false;
 
     /**
-     * Obtener el tipo de moneda origen a la que pertenece el tipo de cambio.
+     * The attributes that aren't mass assignable.
+     *
+     * @var array
+     */
+    protected $guarded = [
+        'ult_usuario', 'ult_fecha', 'ult_equipo', 'ult_ip'
+    ];
+
+    /**
+     * Obtener el maestro a la que pertenece el valor.
      */
     public function miscelaneo()
     {

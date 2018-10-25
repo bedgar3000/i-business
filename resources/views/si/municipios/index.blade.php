@@ -3,7 +3,7 @@
         <div class="page-title d-flex">
             <h4>
                 <i class="icon-gear mr-2"></i>
-                <span class="font-weight-semibold">Estados / Provincias </span>
+                <span class="font-weight-semibold">Departamentos / Municipios </span>
             </h4>
         </div>
     </div>
@@ -41,8 +41,9 @@
                                     <thead>
                                         <tr>
                                             <th style="width: 25px;"></th>
-                                            <th style="width: 20px;">Estado</th>
-                                            <th style="width: 125px;">Nombre Municipio</th>
+                                            <th style="min-width: 125px;">Nombre Municipio</th>
+                                            <th style="min-width: 125px;">Estado</th>
+                                            <th style="min-width: 125px;">Pais</th>
                                             <th style="width: 125px;">Estado</th>
                                         </tr>
                                     </thead>
@@ -68,12 +69,17 @@
             },
             {
                 data: function(data) {
+                    return data['desc_municipio'];
+                }
+            },
+            {
+                data: function(data) {
                     return data['estado']['desc_estado'];
                 }
             },
             {
                 data: function(data) {
-                    return data['desc_municipio'];
+                    return data['estado']['pais']['desc_pais'];
                 }
             },
             {

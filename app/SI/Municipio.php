@@ -12,7 +12,7 @@ class Municipio extends Model
      * @var string
      */
     protected $table = 'si_maestro_municipios';
-    protected $fillable = ['desc_municipio'];
+    protected $fillable = ['desc_municipio','id_estado'];
 
     /**
      * Primary Key.
@@ -36,6 +36,4 @@ class Municipio extends Model
         //return $this->hasOne('App\SI\Estado', 'id_estado', 'id_estado');
         return $this->belongsTo(Estado::class, 'id_estado', 'id_estado');
     }
-
-
 }

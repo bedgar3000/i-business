@@ -1,3 +1,6 @@
+/**
+ * Ready document
+ */
 $(document).ready(function() {
     init();
 
@@ -20,6 +23,9 @@ $(document).ready(function() {
     };
 });
 
+/**
+ * Inicializar eventos y plugins
+ */
 function init() {
     $.ajaxSetup({
         headers: {
@@ -34,6 +40,14 @@ function init() {
     $("form.link-form").off();
 
     $("a.delete-item").off();
+
+    $("a.delete-item").off();
+
+    $(".datatable-ajax tbody tr").off();
+
+    $(".table-cell tbody tr").off();
+
+    $(".table-cell-s tbody tr").off();
 
     // Get request
     $('a.link-item').on('click', function(e) {
@@ -121,8 +135,8 @@ function init() {
         var url = $(this).attr('action');
         var back = $(this).data('back');
         var method = $(this).attr('method');
-        var data = $(this).serialize();
-
+        var data = $(this).serializeJSON();
+        
         axios({
             method: method,
             url: url,
@@ -240,10 +254,21 @@ function init() {
     });
 
     // Multiple rows selection
-    $('.datatable-ajax tbody').on('click', 'tr', function() {
+    $('.datatable-ajax tbody tr').on('click', function() {
         var chk = $(this).find('input[name="row[]"]');
         $(this).toggleClass('table-success');
         if ($(this).hasClass('table-success')) chk.prop('checked', true); else chk.prop('checked', false);
+    });
+
+    // Multiple rows selection
+    $('.table-cell tbody tr').on('click', function() {
+        $(this).toggleClass('table-success');
+    });
+
+    // Simple rows selection
+    $('.table-cell-s tbody tr').on('click', function() {
+        $(this).siblings().removeClass('table-success');
+        $(this).toggleClass('table-success');
     });
 
     // Action item
@@ -287,18 +312,30 @@ function init() {
     });
 }
 
+/**
+ * Funcion para cargar contenido html por ajax
+ * 
+ * @param {string} url Url del request
+ */
 function getLink(url) {
     materialLoading(true);
     axios
         .get(url)
         .then(response => {
             $("#content").html(response.data);
-            init();
-            materialLoading(false);
+            setTimeout(() => {
+                init();
+                materialLoading(false);
+            }, 2000);
         })
         .catch(err => console.log(err));
 }
 
+/**
+ * Funcion para mostrar una notificacion
+ * 
+ * @param {array} params Parametros para el plugin de mensajes
+ */
 function message(params) {
     if (params.status === 'error') {
         var color = 'danger';
@@ -325,11 +362,59 @@ function message(params) {
     });
 }
 
+/**
+ * Funcion para formatear un valor a moneda
+ * 
+ * @param {string} value Valor a formatear
+ */
 function formatMoney(value) {
     return numeral(value).format('0,0.00');
 }
 
+/**
+ * Funcion para formatear un valor a fecha en format Y-m-d
+ * 
+ * @param {string} value Valor a formatear recibido en formato dmY
+ */
 function formatDate(value) {
     var p = value.split('-');
     return p[2] + '-' + p[1] + '-' + p[0];
+}
+
+/**
+ * Cargar select dependientes
+ * 
+ * @param {object} $select 
+ * @param {object} $destinos 
+ * @param {array} data 
+ */
+function select($select, $destinos, data = null) {
+    var option = '<option></option>';
+
+    for(var i=0; i < $destinos.length; i++) {
+        var $destino = $destinos[i];
+        if ($destino.length > 0) $destino.empty().append(option).trigger('change');
+    }
+    
+    if (!data) {
+        data = {
+            id : $select.val()
+        }
+    }
+    var url = $select.data('url');
+
+    axios({
+        method: 'POST',
+        url: url,
+        data: data
+    })
+    .then(response => {
+        console.log(response);
+        response.data.forEach(function(element) {
+            var newOption = new Option(element.nombre, element.id, false, false);
+            $destinos[0].append(newOption).trigger('change');
+            // $destino[0].append($(`<option value="${element.id}">${element.nombre}</option>`)).trigger('change');
+        });
+    })
+    .catch(err => console.log(err));
 }
